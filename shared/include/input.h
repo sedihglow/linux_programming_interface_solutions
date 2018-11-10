@@ -17,8 +17,6 @@
 
 ssize_t read_input(int fd, char *buff, int nbyte);
 
-int parse_buff(int fd, char *buff, int reset_flag, char delim);
-
 void clear_stdin();
 
 char* fgets_input(size_t nbyte, FILE *fp);
