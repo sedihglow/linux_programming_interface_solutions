@@ -1,15 +1,5 @@
 /*
-    stuff i use for stuff.
-
-
-    I really want to know how i should handle increments in for loops in 
-    my macros.
-        Have them pass an increment variable?
-                         ||
-        Have the mixed declaration and declare it with random __'s.
-
-    I just need to research how mixed declarations are implemented by
-    the compilers that do it, and how certian standards handle it.
+    Macros and definitions i use in various programs
 */
 
 #ifndef _SED_HEAD_
@@ -34,8 +24,8 @@
 /*#define NDEBUG*/
 #include <assert.h>
 
-#include "err_handle/err_handle.h"  /* Error handling functions. */
-#include "get_num/get_num.h"        /* Convert strings to int types. */
+#define FAILURE -1
+#define SUCCESS 0
 
 /* Use memcpy to set a float value, causing the proper value to appear instead
    of the min/max. (example: Nan, -Nan, etc.), (memset gives improper results) */
@@ -85,27 +75,6 @@
 #define MIN(m,n) ((m) < (n) ? (m) : (n))
 #define MAX(m,n) ((m) > (n) ? (m) : (n))
 
-/* Get a single character from stdin and loop untill input is correct. 
-   NOTE: > sets the single character to a capital letter.
-         > uses the above macro GET_CHAR(input), not getchar from the standard
-           lib. 
-           TODO: I will consider changing GET_CHARs name in the future
-   - input  == char , string to check for Y/N.
-   - string == char*, message to print to the user via printf();.
-   - ...    == ending variable length arguments placed in printf(string,...);. */
-#define YES_NO(input, string, ...)                                             \
-{                                                                              \
-    /* TODO: Find out what happens with a statment like the following:         \
-             assert("Some literal string" != NULL);                            \
-             - It doesn have an address... but is it NULL? awkward statment. */\
-    do                                                                         \
-    {                                                                          \
-        printf((string), __VA_ARGS__);                                         \
-        GET_CHAR(input);                                                       \
-        (input) = toupper((input));                                            \
-    }while(input != 'Y' && input != 'N');                                      \
-} /* end YES_NO */
-
                     /* other */
 
 /* Create a bit mask for a given range of bits. start, end. (lsb,msb).
@@ -113,15 +82,15 @@
    - end     == int, Which bit greater than start to end the mask.
    - resMask == int, Where the resulting bit mask will be placed */
 #define CREATE_MASK(start, end, resMask)                                       \
-{                                                                              \
+({                                                                             \
     int __INC_ = 0;                                                            \
-    if((start) < (end)){                                                       \
-        errmsg("create_mask: start > end, no mask was generated.");}           \
+    if((start) < (end))                                                        \
+        errmsg("create_mask: start > end, no mask was generated.");            \
                                                                                \
     resMask = 0; /* just to make sure im not an idiot when i call this */      \
     for(__INC_ = (start); __INC_ <= (end); ++__INC_){                          \
         (resMask) |= 1 << __INC_;}                                             \
-} /* end CREATE_MASK */
+}) /* end CREATE_MASK */
 
 /* TODO: Adjust this macro or make an alternate that can call a function with
          variable arguments, rather than just one argument. (i.e. free(pntr);) */
@@ -131,14 +100,14 @@
    -will execute every argument into the function.
    -funct only takes in one argument. */
 #define APPLY_FUNCT(type, funct, ...)                                          \
-{                                                                              \
+({                                                                              \
     void *stopper = (int[]){0};                                                \
     type **apply_list = (type*[]){__VA_ARGS__, stopper};                       \
     int __i_;                                                                  \
                                                                                \
     for(__i_ = 0; apply_list[__i_] != stopper; ++__i_){                        \
         (funct)(apply_list[__i_]);}                                            \
-} /* end apply_funct */
+}) /* end apply_funct */
     
 /* apply free to every pointer given in the argument list using the
    apply_funct macro */
