@@ -7,3 +7,9 @@
 [submodule "shared/input"]
 	path = shared/input
 	url = git@github.com:sedihglow/input.git
+[submodule "shared/convnum"]
+	path = shared/convnum
+	url = git@github.com:sedihglow/convnum.git
+[submodule "shared/err_handle"]
+	path = shared/err_handle
+	url = git@github.com:sedihglow/err_handle.git
