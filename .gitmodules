@@ -4,3 +4,6 @@
 [submodule "convnum"]
 	path = convnum
 	url = git@github.com:sedihglow/convnum.git
+[submodule "shared/input"]
+	path = shared/input
+	url = git@github.com:sedihglow/input.git
