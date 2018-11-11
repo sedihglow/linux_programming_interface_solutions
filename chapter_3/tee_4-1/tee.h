@@ -13,5 +13,5 @@
 
 #define APPEND_FLAGS O_CREAT | O_APPEND | O_WRONLY
 
-int my_tee(int fd);
-int parse_open();
+void my_tee(int fd);
+int parse_open(int argc, char *argv[]);

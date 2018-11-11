@@ -20,6 +20,8 @@ ssize_t read_input(int fd, char *buff, int nbyte)
 
     --nbyte;
     bytes_read = read(fd, buff, nbyte);
+    if (bytes_read == -1)
+        return -1;
 
     if (bytes_read < nbyte)
         buff[bytes_read] = '\0';

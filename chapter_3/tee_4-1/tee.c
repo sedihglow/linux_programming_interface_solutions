@@ -38,19 +38,23 @@ int parse_open(int argc, char *argv[])
 }
 
 
-int my_tee(int fd)
+void my_tee(int fd)
 {
     char buff[IN_SIZE] = {'\0'};
     size_t len;
+    int rbytes;
     
     do {
         /* Reads IN_SIZE-1 and adds null to the end */
-        read_input(STDIN_FILENO, buff, IN_SIZE);
+        rbytes = read_input(STDIN_FILENO, buff, IN_SIZE);
+        if (rbytes == FAILURE)
+            errExit("my_tee: Failure to read.");
+
         len = strlen(buff);
        
         write(fd, buff, len);
 
         if (fd != STDOUT_FILENO)
             write(STDOUT_FILENO, buff, len);
-    } while(true);
+    } while(rbytes != 0);
 }
