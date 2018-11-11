@@ -10,5 +10,8 @@ int main(int argc, char *argv[])
 
     my_tee(fd);
 
+    if (fd != STDOUT_FILENO)
+        close(fd);
+
     exit(EXIT_SUCCESS);
 }
