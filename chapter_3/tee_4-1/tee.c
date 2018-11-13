@@ -18,6 +18,8 @@ int parse_open(int argc, char *argv[])
     if (argc == 2) {
         printf("in write\n");
         fd = open(argv[1], W_FLAGS, MODES); 
+        if (fd == -1)
+            errExit("Failure to open file");
     } else if (argc == 1) { /* no file provided */
         printf("in stdout\n");
         fd = STDOUT_FILENO;
@@ -25,11 +27,13 @@ int parse_open(int argc, char *argv[])
 
     while((opt = getopt(argc, argv, "a:")) != -1) {
         switch(opt) {
-            case 'a':
-                printf("in append\n");
-                fd = open(optarg, APPEND_FLAGS, MODES);
-                break;
-            default:
+        case 'a':
+            printf("in append\n");
+            fd = open(optarg, APPEND_FLAGS, MODES);
+            if (fd == -1)
+                errExit("Failure to open file");
+            break;
+        default:
                 errnumExit(EINVAL,"invalid use of arguments. $cmd -a [file]");
         }
     }

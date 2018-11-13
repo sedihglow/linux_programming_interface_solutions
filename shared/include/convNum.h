@@ -31,10 +31,10 @@
                     /* public prototypes */
 
 /* turn arg into a long based on flags. name used in error message */
-long convLong(const char *arg, int flags, const char *varName);
+long conv_long(const char *arg, int flags, const char *varName);
 
 /* turn arg into a int based on flags. name used in error message */
-int convInt(const char *arg, int flags, const char *varName);
+int conv_int(const char *arg, int flags, const char *varName);
 
 /* turn arg into a int32_t based on flags. name used in error message */
 int32_t conv32_t(const char *arg, int32_t flags, const char *varName);

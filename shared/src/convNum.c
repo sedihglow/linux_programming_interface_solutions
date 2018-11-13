@@ -168,7 +168,7 @@ unsigned long long convUnsigned(const char *fname, const char *arg,     /*#{{{*/
 /******************************************************************************
  *                          Header Funtions
  *****************************************************************************/
-long convLong(const char *arg, int32_t flags, const char *varName)/*#{{{*/
+long conv_long(const char *arg, int32_t flags, const char *varName)/*#{{{*/
 {
     register long long res = 0;
 
@@ -185,7 +185,7 @@ long convLong(const char *arg, int32_t flags, const char *varName)/*#{{{*/
     return (long) res;
 } /* end convLong #}}} */
 
-int convInt(const char *arg, int32_t flags, const char *varName)/*#{{{*/
+int conv_int(const char *arg, int32_t flags, const char *varName)/*#{{{*/
 {
     register long long res = 0;
 
