@@ -57,9 +57,14 @@ void my_tee(int fd)
         len = strlen(buff);
        
         write(fd, buff, len);
+        if (errno)
+            errExit("Failure to write");
 
-        if (fd != STDOUT_FILENO)
+        if (fd != STDOUT_FILENO) {
             write(STDOUT_FILENO, buff, len);
+            if (errno)
+                errExit("Failure to write");
+        }
     } while(rbytes != 0);
 
 }
